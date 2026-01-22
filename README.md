@@ -25,14 +25,17 @@ Copy the ralph files into your project:
 ```bash
 # From your project root
 mkdir -p scripts/ralph
-cp /path/to/ralph/ralph.sh scripts/ralph/
-
-# Copy the prompt template for your AI tool of choice:
-cp /path/to/ralph/prompt.md scripts/ralph/prompt.md    # For Amp
-# OR
-cp /path/to/ralph/CLAUDE.md scripts/ralph/CLAUDE.md    # For Claude Code
-
+cp ~/src/ralph/ralph.sh scripts/ralph/
 chmod +x scripts/ralph/ralph.sh
+
+# GENERIC
+cp ~/src/ralph/prompt.md scripts/ralph/prompt.md
+
+# AMP
+cp ~/src/ralph/prompt-amp.md scripts/ralph/prompt-amp.md
+
+# CLAUDE
+cp ~/src/ralph/CLAUDE.md scripts/ralph/CLAUDE.md
 ```
 
 ### Option 2: Install skills globally
@@ -44,6 +47,12 @@ For AMP
 cp -r skills/prd ~/.config/amp/skills/
 cp -r skills/ralph ~/.config/amp/skills/
 ```
+
+For CODEX
+```bash
+cp -r skills/prd ~/.codex/skills/
+cp -r skills/ralph ~/.codex/skills/
+````
 
 For Claude Code
 ```bash

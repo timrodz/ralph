@@ -5,7 +5,7 @@
 set -e
 
 # Parse arguments
-TOOL="amp"  # Default to amp for backwards compatibility
+TOOL="codex"  # Default to amp for backwards compatibility
 MAX_ITERATIONS=10
 
 while [[ $# -gt 0 ]]; do
@@ -29,8 +29,8 @@ while [[ $# -gt 0 ]]; do
 done
 
 # Validate tool choice
-if [[ "$TOOL" != "amp" && "$TOOL" != "claude" ]]; then
-  echo "Error: Invalid tool '$TOOL'. Must be 'amp' or 'claude'."
+if [[ "$TOOL" != "amp" && "$TOOL" != "claude" && "$TOOL" != "codex" && "$TOOL" != "cursor" ]]; then
+  echo "Error: Invalid tool '$TOOL'. Must be 'amp', 'claude', 'codex', or 'cursor'."
   exit 1
 fi
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -89,9 +89,9 @@ for i in $(seq 1 $MAX_ITERATIONS); do
 
   # Run the selected tool with the ralph prompt
   if [[ "$TOOL" == "amp" ]]; then
-    OUTPUT=$(cat "$SCRIPT_DIR/prompt.md" | amp --dangerously-allow-all 2>&1 | tee /dev/stderr) || true
+    OUTPUT=$(cat "$SCRIPT_DIR/prompt-amp.md" | amp --dangerously-allow-all 2>&1) || true
   elif [[ "$TOOL" == "codex" ]]; then
-    OUTPUT=$(cat "$SCRIPT_DIR/prompt.md" | codex exec --yolo 2>&1 | tee /dev/stderr) || true
+    OUTPUT=$(codex exec --yolo - "$SCRIPT_DIR/prompt.md" 2>&1 | tee /dev/stderr) || true
   elif [[ "$TOOL" == "cursor" ]]; then
     OUTPUT=$(cat "$SCRIPT_DIR/prompt.md" | cursor agent --force --print 2>&1 | tee /dev/stderr) || true
   else
